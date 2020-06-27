@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Logging;
 using WebApp.Models;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebApp.Controllers
 {
@@ -11,45 +12,42 @@ namespace WebApp.Controllers
     {
         private DataContext context;
 
-        public ProductsController(DataContext context)
+        public ProductsController(DataContext ctx)
         {
-            this.context = context;
+            context = ctx;
         }
 
         [HttpGet]
-        public IEnumerable<Product> GetProducts()
+        public IAsyncEnumerable<Product> GetProducts()
         {
-            // return new Product[] {new Product() {Name = "Product #1"}, new Product() {Name = "Product #2"},};
             return context.Products;
         }
 
         [HttpGet("{id}")]
-        public Product GetProduct(long id, [FromServices] ILogger<ProductsController> logger)
+        public async Task<Product> GetProduct(long id)
         {
-            // return new Product() {ProductId = 1, Name = "Test Product"};
-            logger.LogDebug("GetProduct Action Invoked");
-            return context.Products.Find(id);
+            return await context.Products.FindAsync(id);
         }
 
         [HttpPost]
-        public void SaveProduct([FromBody] Product product)
+        public async Task SaveProduct([FromBody] Product product)
         {
-            context.Products.Add(product);
-            context.SaveChanges();
+            await context.Products.AddAsync(product);
+            await context.SaveChangesAsync();
         }
 
         [HttpPut]
-        public void UpdateProduct([FromBody] Product product)
+        public async Task UpdateProduct([FromBody] Product product)
         {
-            context.Products.Update(product);
-            context.SaveChanges();
+            context.Update(product);
+            await context.SaveChangesAsync();
         }
 
         [HttpDelete("{id}")]
-        public void DeleteProduct(long id)
+        public async Task DeleteProduct(long id)
         {
             context.Products.Remove(new Product() {ProductId = id});
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
