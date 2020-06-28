@@ -30,8 +30,14 @@ namespace WebApp
                 opts.UseSqlServer(Configuration["ConnectionStrings:ProductConnection"]);
                 opts.EnableSensitiveDataLogging(true);
             });
-            services.AddControllers();
-            services.Configure<JsonOptions>(opts => { opts.JsonSerializerOptions.IgnoreNullValues = true; });
+            services.AddControllers().AddNewtonsoftJson();
+            services.Configure<MvcNewtonsoftJsonOptions>(opts =>
+            {
+                opts.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            }); 
+            //services.Configure<JsonOptions>(opts => {
+            //    opts.JsonSerializerOptions.IgnoreNullValues = true;
+            //}); 
         }
 
         public void Configure(IApplicationBuilder app, DataContext context)
