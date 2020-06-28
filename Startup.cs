@@ -1,16 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using WebApp.Models;
 
 namespace WebApp
@@ -31,39 +25,19 @@ namespace WebApp
                 opts.UseSqlServer(Configuration["ConnectionStrings:ProductConnection"]);
                 opts.EnableSensitiveDataLogging(true);
             });
-            services.AddControllers().AddNewtonsoftJson().AddXmlSerializerFormatters();
-            ;
-            services.Configure<MvcNewtonsoftJsonOptions>(opts =>
-            {
-                opts.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            });
-            services.Configure<MvcOptions>(opts =>
-            {
-                opts.RespectBrowserAcceptHeader = true;
-                opts.ReturnHttpNotAcceptable = true;
-            });
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo {Title = "WebApp", Version = "v1"});
-            });
-            //services.Configure<JsonOptions>(opts => {
-            //    opts.JsonSerializerOptions.IgnoreNullValues = true;
-            //}); 
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         public void Configure(IApplicationBuilder app, DataContext context)
         {
             app.UseDeveloperExceptionPage();
+            app.UseStaticFiles();
             app.UseRouting();
-            app.UseMiddleware<TestMiddleware>();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
-                // endpoints.MapWebService();
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseSwagger();
-            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApp"); });
             SeedData.SeedDatabase(context);
         }
     }
