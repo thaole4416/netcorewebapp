@@ -15,6 +15,17 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Views\Shared" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="Views\Home\Index.cshtml">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
     <PropertyGroup>
         <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
     </PropertyGroup>
