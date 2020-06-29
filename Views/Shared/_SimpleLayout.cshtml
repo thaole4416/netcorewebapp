@@ -2,13 +2,12 @@
 <html>
 <head>
     <title>@ViewBag.Title</title><link href="/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
-          asp-fallback-href="/lib/twitter-bootstrap/css/bootstrap.min.css"
-          asp-fallback-test-class="btn"
-          asp-fallback-test-property="display"
-          asp-fallback-test-value="inline-block"rel="stylesheet"/>
+    <link href="/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="m-2">@RenderBody()</div>
+<div class="m-2">
+    <img src="/images/city.png" asp-append-version="true" class="m-2" height="200px" width="auto"/>
+    @RenderBody()
+</div>
 </body>
 </html>
