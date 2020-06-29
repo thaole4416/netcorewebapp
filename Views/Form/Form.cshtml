@@ -2,8 +2,9 @@
 @{ Layout = "_SimpleLayout"; }
 <h5 class="bg-primary text-white text-center p-2">HTML Form</h5>
 @* <form action="/controllers/form/submitform" method="post"> *@
-<form asp-action="SubmitForm" method="post">
+<form asp-action="submitform" method="post" id="htmlform">
     <div class="form-group">
         <label>Name</label><input class="form-control" name="Name" value="@Model.Name"/>
     </div><button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<button form="htmlform" asp-action="submitform" class="btn btn-primary mt-2">Sumit (Outside Form) </button> 
