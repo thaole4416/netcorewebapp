@@ -10,18 +10,26 @@
     <table class="table table-sm table-striped table-bordered">
         <thead>
         <tr>
-            <th class="bg-primary text-white text-center" colspan="2">@RenderSection("Header",true)</th>
+            <th class="bg-primary text-white text-center" colspan="2">@RenderSection("Header", true)</th>
         </tr>
         </thead><tbody>@RenderBody()</tbody>
         <tfoot>
         <tr>
-            <th class="bg-primary text-white text-center" colspan="2">@RenderSection("Footer",false)</th>
+            <th class="bg-primary text-white text-center" colspan="2">@RenderSection("Footer", false)</th>
         </tr>
         </tfoot>
     </table>
 </div>
 <div class="bg-info text-white m-2 p-1">This is part of the layout</div><h6 class="bg-primary text-white text-center m-2 p-2">@RenderSection("Footer")</h6>
 <div class="bg-info text-white m-2 p-1">This is part of the layout</div>
-@RenderSection("Summary",false) 
+@if (IsSectionDefined("Summary"))
+{
+    @RenderSection("Summary", false)
+}
+else
+{
+    
+    <div class="bg-info text-center text-white m-2 p-2">This is the default summary</div>
+}
 </body>
 </html>
