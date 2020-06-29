@@ -15,9 +15,11 @@ namespace WebApp.Components
             data = cdata;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string themeName)
         {
-            return new HtmlContentViewComponentResult(new HtmlString("This is a <h3><i>string</i></h3>"));
+            ViewBag.Theme = themeName;
+            return View(new CityViewModel
+                {Cities = data.Cities.Count(), Population = data.Cities.Sum(c => c.Population)});
         }
     }
 }
