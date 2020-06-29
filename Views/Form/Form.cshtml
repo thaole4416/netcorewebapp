@@ -15,11 +15,7 @@
         </div>
         <div class="form-group">
             <label asp-for="Category.Name">Category</label>
-            <select class="form-control" asp-for="CategoryId">
-                <option value="1">Watersports</option>
-                <option value="2">Soccer</option>
-                <option value="3">Chess</option>
-            </select>
+            <select class="form-control" asp-for="CategoryId"asp-items="@ViewBag.Categories"></select>
         </div>
         <div class="form-group">
             <label asp-for="Supplier.Name">Supplier</label><input class="form-control" asp-for="Supplier.Name"/>
