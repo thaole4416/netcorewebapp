@@ -33,6 +33,7 @@ namespace WebApp
             {
                 opts.Conventions.AddPageRoute("/index", "extra/page/{id:long?}");
             });
+            services.AddSingleton<CitiesData>();
         }
 
         public void Configure(IApplicationBuilder app, DataContext context)
