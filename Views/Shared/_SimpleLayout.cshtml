@@ -2,6 +2,14 @@
 <html>
 <head>
     <title>@ViewBag.Title</title><link href="/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    @* Include *@
+    <script asp-src-include="lib/jquery/**/*.js"></script> 
+    <script asp-src-include="lib/jquery**/*.min.js"></script> 
+    <script asp-src-include="lib/jquery**/*slim.min.js"></script>
+    @* Exclude *@
+    <script asp-src-include="/lib/jquery/**/*.min.js"asp-src-exclude="**.slim.**"></script> 
+    @* Cache Busting *@
+    <script asp-src-include="/lib/jquery/**/*.min.js"asp-src-exclude="**.slim.**" asp-append-version="true"> </script> 
 </head>
 <body>
 <div class="m-2">@RenderBody()</div>
