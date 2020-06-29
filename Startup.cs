@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -26,13 +22,8 @@ namespace WebApp
                 opts.UseSqlServer(Configuration["ConnectionStrings:ProductConnection"]);
                 opts.EnableSensitiveDataLogging(true);
             });
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddDistributedMemoryCache();
-            services.AddSession(options => { options.Cookie.IsEssential = true; });
-            services.Configure<RazorPagesOptions>(opts =>
-            {
-                opts.Conventions.AddPageRoute("/index", "extra/page/{id:long?}");
-            });
             services.AddSingleton<CitiesData>();
         }
 
@@ -40,7 +31,6 @@ namespace WebApp
         {
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
-            app.UseSession();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
