@@ -26,17 +26,20 @@ namespace WebApp
                 opts.EnableSensitiveDataLogging(true);
             });
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => { options.Cookie.IsEssential = true; });
         }
 
         public void Configure(IApplicationBuilder app, DataContext context)
         {
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
             });
             SeedData.SeedDatabase(context);
         }
