@@ -17,9 +17,12 @@
         </tr>
         </thead>
         <tbody>
+        @{
+            Func<Product,object> Test = @<tr><td>@item.Name</td><td>@item.Price</td></tr>; 
+        }
         @foreach (Product p in Model)
         {
-            <partial name="_RowPartial" model="p" />
+            @Test(p)
 @*             @Html.Partial("_RowPartial")  *@
         }
         </tbody>
