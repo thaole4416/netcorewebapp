@@ -1,32 +1,18 @@
-﻿@model IEnumerable<Product>  
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-</head>
-<body>
+﻿@model IEnumerable<Product>
+@{ Layout = "_SimpleLayout"; }
 <h6 class="bg-secondary text-white text-center m-2 p-2">Products</h6>
 <div class="m-2">
     <table class="table table-sm table-striped table-bordered">
         <thead>
         <tr>
-            <th>Name</th><th>Price</th>
+            <th>Name</th><th>Price</th><th>Category</th><th>Supplier</th><th></th>
         </tr>
         </thead>
         <tbody>
-        @{
-            Func<Product,object> Test = @<tr><td>@item.Name</td><td>@item.Price</td></tr>; 
-        }
         @foreach (Product p in Model)
         {
-            @Test(p)
-@*             @Html.Partial("_RowPartial")  *@
+            <partial name="_RowPartial" model="p"/>
         }
         </tbody>
     </table>
 </div>
-</body>
-</html>
