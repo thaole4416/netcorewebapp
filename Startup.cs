@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
-using WebApp.TagHelpers;
 
 namespace WebApp
 {
@@ -27,8 +25,6 @@ namespace WebApp
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddSingleton<CitiesData>();
-            // services.AddTransient<ITagHelperComponent, TimeTagHelperComponent>();
-            // services.AddTransient<ITagHelperComponent, TableFooterTagHelperComponent>(); 
         }
 
         public void Configure(IApplicationBuilder app, DataContext context)
@@ -39,6 +35,7 @@ namespace WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("forms", "controllers/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
