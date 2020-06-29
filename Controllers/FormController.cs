@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,7 +18,9 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Index(long id = 1)
         {
-            ViewBag.Categories= new SelectList(context.Categories, "CategoryId", "Name");
+            Category defaultSelect = new Category() {CategoryId = 0, Name = "Default Selector"};
+            
+            ViewBag.Categories= new SelectList(context.Categories.AsEnumerable().Prepend(defaultSelect), "CategoryId", "Name");
             return View("Form", await context.Products.FindAsync(id));
         }
 
