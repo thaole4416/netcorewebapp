@@ -8,7 +8,9 @@ namespace WebApp.TagHelpers
     [HtmlTargetElement("div", Attributes = "[route-data=true]")]
     public class RouteDataTagHelper : TagHelper
     {
-        [ViewContext] [HtmlAttributeNotBound] public ViewContext Context { get; set; }
+        [ViewContext] 
+        [HtmlAttributeNotBound] 
+        public ViewContext Context { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
