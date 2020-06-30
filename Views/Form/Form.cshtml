@@ -1,5 +1,7 @@
 ﻿@model Product
 @{ Layout = "_SimpleLayout"; }
+
+<partial name="_Validation" /> 
 <h5 class="bg-primary text-white text-center p-2">HTML Form</h5>
 <form asp-action="submitform" method="post" id="htmlform">
     <div class="form-group">
