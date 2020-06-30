@@ -27,8 +27,17 @@ namespace WebApp.Controllers
                     .FirstOrDefaultAsync(p => id == null || p.ProductId == id));
         }
 
+        // [HttpPost]
+        // public IActionResult SubmitForm(Category category)
+        // {
+        //     TempData["category"] = System.Text.Json.JsonSerializer.Serialize(category);
+        //     return RedirectToAction(nameof(Results));
+        // }
+
         [HttpPost]
-        public IActionResult SubmitForm(Product product) {TempData["product"] = System.Text.Json.JsonSerializer.Serialize(product);
+        public IActionResult SubmitForm([Bind(Prefix = "Category")] Category category)
+        {
+            TempData["category"] = System.Text.Json.JsonSerializer.Serialize(category);
             return RedirectToAction(nameof(Results));
         }
 
