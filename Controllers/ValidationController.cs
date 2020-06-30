@@ -14,18 +14,19 @@ namespace WebApp.Controllers
             dataContext = context;
         }
 
+        [Bind(Prefix = "Product")]public class KeyTarget {public string CategoryId { get; set; }public string SupplierId{ get; set; }}
+        
         [HttpGet("categorykey")]
-        public bool CategoryKey(string categoryId)
-        {
+        public bool CategoryKey(string categoryId, [FromQuery] KeyTarget target) {
             long keyVal;
-            return long.TryParse(categoryId, out keyVal) && dataContext.Categories.Find(keyVal) != null;
+            return long.TryParse(categoryId ?? target.CategoryId, out keyVal) && dataContext.Categories.Find(keyVal) != null;
         }
 
         [HttpGet("supplierkey")]
-        public bool SupplierKey(string supplierId)
+        public bool SupplierKey(string supplierId, [FromQuery] KeyTarget target)
         {
             long keyVal;
-            return long.TryParse(supplierId, out keyVal) && dataContext.Suppliers.Find(keyVal) != null;
+            return long.TryParse(supplierId ?? target.SupplierId, out keyVal) && dataContext.Suppliers.Find(keyVal) != null;
         }
     }
 }
