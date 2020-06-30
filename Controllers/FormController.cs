@@ -28,10 +28,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitForm(string name, decimal price)
-        {
-            TempData["name param"] = name;
-            TempData["price param"] = price.ToString();
+        public IActionResult SubmitForm(Product product) {TempData["product"] = System.Text.Json.JsonSerializer.Serialize(product);
             return RedirectToAction(nameof(Results));
         }
 
