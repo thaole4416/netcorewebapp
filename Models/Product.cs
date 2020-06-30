@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using WebApp.Validation;
 
@@ -16,9 +17,11 @@ namespace WebApp.Models
         [Range(1, 999999, ErrorMessage = "Please enter a positive price")]
         public decimal Price { get; set; }
         [PrimaryKey(ContextType= typeof(DataContext), DataType = typeof(Category))]
+        [Remote("CategoryKey", "Validation", ErrorMessage = "Enter an existing key")]
         public long CategoryId { get; set; }
         public Category Category { get; set; }
         [PrimaryKey(ContextType = typeof(DataContext), DataType = typeof(Category))]
+        [Remote("SupplierKey", "Validation", ErrorMessage = "Enter an existing key")]
         public long SupplierId { get; set; }
         public Supplier Supplier { get; set; }
     }
