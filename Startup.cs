@@ -33,6 +33,7 @@ namespace WebApp
             services.Configure<MvcOptions>(opts =>
                 opts.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value => "Please enter a value"));
             services.AddScoped<GuidResponseAttribute>();
+            services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpsOnlyAttribute>()); 
         }
 
         public void Configure(IApplicationBuilder app, DataContext context, IAntiforgery antiforgery)
