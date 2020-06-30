@@ -3,31 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebApp.Filters
 {
-    public class SimpleCacheAttribute : Attribute, IResourceFilter
+    public class SimpleCacheAttribute : Attribute, IAsyncResourceFilter
     {
         private Dictionary<PathString, IActionResult> CachedResponses = new Dictionary<PathString, IActionResult>();
 
-        public void OnResourceExecuting(ResourceExecutingContext context)
+        public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
         {
             PathString path = context.HttpContext.Request.Path;
-            Console.WriteLine("------------------------------------------------------");
-            Console.WriteLine(CachedResponses);
-            Console.WriteLine(context.Result);
-            Console.WriteLine(context.HttpContext.Request.Path);
-            Console.WriteLine("------------------------------------------------------");
             if (CachedResponses.ContainsKey(path))
             {
                 context.Result = CachedResponses[path];
                 CachedResponses.Remove(path);
             }
-        }
-
-        public void OnResourceExecuted(ResourceExecutedContext context)
-        {
-            CachedResponses.Add(context.HttpContext.Request.Path, context.Result);
+            else
+            {
+                ResourceExecutedContext execContext = await next();
+                CachedResponses.Add(context.HttpContext.Request.Path, execContext.Result);
+            }
         }
     }
 }
