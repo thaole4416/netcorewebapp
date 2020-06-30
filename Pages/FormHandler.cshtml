@@ -8,7 +8,7 @@
             <label>Name</label><input class="form-control" asp-for="Product.Name"/>
         </div>
         <div class="form-group">
-            <label>Price</label><input class="form-control" asp-for="Product.Price" name="price"/>
+            <label>Price</label><input class="form-control" asp-for="Product.Price"/>
         </div>
         <div class="form-group">
             <label>Category</label><input class="form-control" asp-for="Product.Category.Name"/>
@@ -33,6 +33,7 @@
             context = dbContext;
         }
 
+        [BindProperty]
         public Product Product { get; set; }
 
         public async Task OnGetAsync(long id = 1)
@@ -40,7 +41,9 @@
             Product = await context.Products.Include(p => p.Category).Include(p => p.Supplier).FirstAsync(p => p.ProductId == id);
         }
 
-        public IActionResult OnPost(Product product) {TempData["product"] = System.Text.Json.JsonSerializer.Serialize(product);
+        public IActionResult OnPost()
+        {
+            TempData["product"] = System.Text.Json.JsonSerializer.Serialize(Product);
             return RedirectToPage("FormResults");
         }
     }
