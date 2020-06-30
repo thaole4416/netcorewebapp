@@ -43,7 +43,7 @@ namespace WebApp.Controllers
                 product.Name.ToLower().StartsWith("small") && product.Price > 100)
             {
                 ModelState.AddModelError("", "Small products cannot cost more than $100");
-            }fom
+            }
 
             if (!context.Categories.Any(c => c.CategoryId == product.CategoryId))
             {
