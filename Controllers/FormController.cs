@@ -28,15 +28,15 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult SubmitForm(Product product)
         {
-            if (string.IsNullOrEmpty(product.Name))
-            {
-                ModelState.AddModelError(nameof(Product.Name), "Enter a name");
-            }
-
-            if (ModelState.GetValidationState(nameof(Product.Price)) == ModelValidationState.Valid && product.Price < 1)
-            {
-                ModelState.AddModelError(nameof(Product.Price), "Enter a positive price");
-            }
+            // if (string.IsNullOrEmpty(product.Name))
+            // {
+            //     ModelState.AddModelError(nameof(Product.Name), "Enter a name");
+            // }
+            //
+            // if (ModelState.GetValidationState(nameof(Product.Price)) == ModelValidationState.Valid && product.Price < 1)
+            // {
+            //     ModelState.AddModelError(nameof(Product.Price), "Enter a positive price");
+            // }
 
             if (ModelState.GetValidationState(nameof(Product.Name)) == ModelValidationState.Valid &&
                 ModelState.GetValidationState(nameof(Product.Price)) == ModelValidationState.Valid &&
