@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Filters;
 using WebApp.Models;
 
 namespace WebApp
@@ -31,6 +32,7 @@ namespace WebApp
             services.Configure<AntiforgeryOptions>(opts => { opts.HeaderName = "X-XSRF-TOKEN"; });
             services.Configure<MvcOptions>(opts =>
                 opts.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value => "Please enter a value"));
+            services.AddScoped<GuidResponseAttribute>();
         }
 
         public void Configure(IApplicationBuilder app, DataContext context, IAntiforgery antiforgery)
