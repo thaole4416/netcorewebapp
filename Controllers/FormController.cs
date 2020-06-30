@@ -19,8 +19,7 @@ namespace WebApp.Controllers
             context = dbContext;
         }
 
-        public async Task<IActionResult> Index(long? id)
-        {
+        public async Task<IActionResult> Index([FromQuery] long? id) {
             ViewBag.Categories = new SelectList(context.Categories, "CategoryId", "Name");
             return View("Form",
                 await context.Products.Include(p => p.Category).Include(p => p.Supplier)
@@ -47,5 +46,11 @@ namespace WebApp.Controllers
         {
             return View((TempDataDictionary) TempData);
         }
+        
+        public string Header1([FromHeader]string accept) {return $"Header: {accept}";}
+        
+        public string Header2([FromHeader(Name = "Accept-Language")] string accept) {return $"Header: {accept}";}
+        
+        [HttpPost][IgnoreAntiforgeryToken]public Product Body([FromBody] Product model) {return model;}
     }
 }
